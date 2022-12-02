@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework/BaseLevel.h"
+#include "Player.h"
 class Level :
     BaseLevel
 {
@@ -10,5 +11,8 @@ public:
     void handleInput(float dt) override;
     void update(float dt);
     void render();
+
+    sf::CircleShape shape;
+    Player* player1;
 };
 

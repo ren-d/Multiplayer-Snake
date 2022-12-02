@@ -1,2 +1,12 @@
-﻿  Level.cpp
-  CMP105App.vcxproj -> C:\Users\Duncan\Desktop\Uni\_Year 3\Term 1\CMP303 Network Systems for Game Development\cmp105_coursework-ren-d\Coursework\x64\Debug\CMP105App.exe
+﻿  Player.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(34,26): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(35,26): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  CMP105App.vcxproj -> C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe
