@@ -1,16 +1,16 @@
 #include "Player.h"
-Player::Player(sf::Vector2f newPosition)
+Player::Player(sf::Vector2f screenCenter)
 {
-	center = newPosition;
+	_screenCenter = screenCenter;
 	_size = 3;
 	_speed = 50;
-	_head = new Node(1, 0,10, 10, sf::Color::Red);
-
-	_end = new Node(1, 0, 5, 10, sf::Color::Black);
+	_scale = sf::Vector2f(1, 1);
+	_head = new Node(1, 0,10, 10, sf::Color::Blue, &_scale);
+	_end = new Node(1, 0, 8, 10, sf::Color::Cyan, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
 	Init();
-	
+	_counter = 0;
 }
 
 Player::~Player()
@@ -20,7 +20,6 @@ Player::~Player()
 
 void Player::Init()
 {
-
 	for (int i = 0; i < _size - 1; i++) {
 		addTailNode();
 	}
@@ -28,38 +27,76 @@ void Player::Init()
 
 void Player::handleInput(float dt)
 {
+	_counter += dt;
+	std::cout << _size << std::endl;
 	if (true)
 	{
-		sf::Vector2f mouse( input->getMouseX() - center.x,  input->getMouseY() - center.y );
-		mouse = VectorHelper::normalise(mouse);
+		_mouseDirectionVector = sf::Vector2f( input->getMouseX() - _screenCenter.x,  input->getMouseY() - _screenCenter.y );
+		_mouseDirectionVector = VectorHelper::normalise(_mouseDirectionVector);
 
-		_head->_yDir = mouse.y * 3;
-		_head->_xDir = mouse.x * 3;
-
-
+		_head->setDirection(sf::Vector2f (_mouseDirectionVector.x *3, _mouseDirectionVector.y * 3));
+	
 	}
 
 	if (input->isPressed(sf::Keyboard::Space))
 	{
-		Grow();
+		
+			Grow(20);
+		
+		
+	}
+
+	if (input->isKeyDown(sf::Keyboard::LShift))
+	{
+		_speed = 100;
+		if (_counter >= 0.1)
+		{
+			Shrink();
+		}
+		
+	}
+	else
+	{
+		_speed = 50;
 	}
 }
+
+void Player::Shrink()
+{
+	Node* temp = _end->next;
+	temp->prev = nullptr;
+	delete _end;
+	_end = temp;
+
+	_size--;
+	_scale.x -= 0.002;
+	_scale.y -= 0.002;
+	_counter = 0;
+}
+
 
 void Player::Render(sf::RenderWindow* window)
 {
 	Node* current = _head->prev;
 
 	while (current != nullptr) {
-		window->draw(current->shape);
+		window->draw(current->getShape());
 		current = current->prev;
 	}
 
-	window->draw(_head->shape);
+	window->draw(_head->getShape());
 }
 
-void Player::Grow()
+void Player::Grow(int growth)
 {
-	addTailNode();
+	for (int i = 0; i < growth; i++)
+	{
+		addTailNode();
+		_scale.x += 0.002;
+		_scale.y += 0.002;
+		_size++;
+	}
+	
 }
 
 void Player::Die()
@@ -95,12 +132,16 @@ void Player::addEnd(Node* node)
 
 void Player::addTailNode()
 {
-	addEnd(new Node(_end->_xDir, _end->_yDir, _end->_xPos - _end->_xDir, _end->_yPos - _end->_yDir, sf::Color::Green));
+	addEnd(new Node(_end->getDirection().x, _end->getDirection().y,
+					_end->getPosition().x - _end->getDirection().y, 
+					_end->getPosition().y - _end->getDirection().y, 
+					sf::Color::Cyan, 
+					&_scale));
 }
 
 sf::Vector2f Player::getHeadPosition()
 {
-	return sf::Vector2f(_head->_xPos, _head->_yPos);
+	return _head->getPosition();
 }
 void Player::update(float dt)
 {

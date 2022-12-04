@@ -14,5 +14,6 @@ public:
 
     sf::CircleShape shape;
     Player* player1;
+    sf::RectangleShape wall;
 };
 

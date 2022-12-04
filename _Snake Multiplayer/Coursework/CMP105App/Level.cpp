@@ -7,6 +7,8 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	audio = aud;
 
 	shape = sf::CircleShape(10);
+	wall = sf::RectangleShape(sf::Vector2f(100, 100));
+	wall.setFillColor(sf::Color::Black);
 	shape.setFillColor(sf::Color::Magenta);
 	shape.setPosition(window->getSize().x / 2, window->getSize().y / 2);
 	player1 = new Player(sf::Vector2f(window->getView().getSize().x / 2, window->getView().getSize().y / 2));
@@ -28,8 +30,9 @@ void Level::handleInput(float dt)
 void Level::render()
 {
 	beginDraw();
+	window->draw(wall);
 	player1->Render(window);
-
+	
 	endDraw();
 }
 
