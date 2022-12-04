@@ -9,8 +9,9 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	shape = sf::CircleShape(10);
 	shape.setFillColor(sf::Color::Magenta);
 	shape.setPosition(window->getSize().x / 2, window->getSize().y / 2);
-	player1 = new Player();
+	player1 = new Player(sf::Vector2f(window->getView().getSize().x / 2, window->getView().getSize().y / 2));
 	player1->setInput(in);
+	sf::View* view = new sf::View(player1->getHeadPosition(), window->getView().getSize());
 
 }
 
@@ -34,6 +35,8 @@ void Level::render()
 
 void Level::update(float dt)
 {
+	sf::View view = sf::View(player1->getHeadPosition(), window->getView().getSize());
+	window->setView(view);
 	window->clear(sf::Color(155, 0, 0, 255));
 	player1->update(dt);
 }

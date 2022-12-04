@@ -7,7 +7,7 @@ class Player :
     public GameObject
 {
 public:
-    Player();
+    Player(sf::Vector2f newPosition);
     ~Player();
 
     
@@ -17,7 +17,7 @@ public:
     void Grow();
     void Die();
     void update(float dt);
-
+    sf::Vector2f getHeadPosition();
 private:
     void addFront(Node* node);
     void addEnd(Node* node);
@@ -25,8 +25,9 @@ private:
     void propagateDirections();
     int _size;
     float _speed;
+    
     sf::CircleShape shape;
-    sf::Vector2f _pos;
+    sf::Vector2f center;
     sf::Vector2f _dir;
     sf::Vector2f mouse;
     Node* _head;
