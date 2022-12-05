@@ -68,7 +68,7 @@ int main()
 	srand(time(NULL));
 	//Create the window
 	sf::RenderWindow window(sf::VideoMode(640, 480), "CMP105_Coursework");
-
+	
 	// Initialise input and level objects.
 	AudioManager audioManager;
 	Input input;
@@ -84,11 +84,11 @@ int main()
 	{
 		//Process window events
 		windowProcess(&window, &input);
-
+		window.clear(sf::Color::Black);
 		// Calculate delta time. How much time has passed 
 		// since it was last calculated (in seconds) and restart the clock.
 		deltaTime = clock.restart().asSeconds();
-
+		
 		// Call standard game loop functions (input, update and render)
 		level.handleInput(deltaTime);
 		level.update(deltaTime);

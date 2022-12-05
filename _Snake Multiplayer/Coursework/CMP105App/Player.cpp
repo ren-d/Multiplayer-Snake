@@ -9,6 +9,7 @@ Player::Player(sf::Vector2f screenCenter)
 	_end = new Node(1, 0, 8, 10, sf::Color::Cyan, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
+	setSize(sf::Vector2f(_head->getShape().getLocalBounds().width, _head->getShape().getLocalBounds().height));
 	Init();
 	_counter = 0;
 }
@@ -28,15 +29,40 @@ void Player::Init()
 void Player::handleInput(float dt)
 {
 	_counter += dt;
-	std::cout << _size << std::endl;
-	if (true)
-	{
-		_mouseDirectionVector = sf::Vector2f( input->getMouseX() - _screenCenter.x,  input->getMouseY() - _screenCenter.y );
-		_mouseDirectionVector = VectorHelper::normalise(_mouseDirectionVector);
 
-		_head->setDirection(sf::Vector2f (_mouseDirectionVector.x *3, _mouseDirectionVector.y * 3));
-	
+	if (outOfBounds) {
+		_outOfBoundsCounter += dt;
+		if (_outOfBoundsCounter >= 3)
+		{
+			Die();
+		}
 	}
+	else
+	{
+		_outOfBoundsCounter = 0;
+	}
+	
+	if (input->isKeyDown(sf::Keyboard::LShift))
+	{
+		_speed = 100;
+		if (_counter >= 0.1)
+		{
+			Shrink();
+		}
+
+	}
+	else
+	{
+		_speed = 50;
+	}
+
+	_mouseDirectionVector = sf::Vector2f( input->getMouseX() - _screenCenter.x,  input->getMouseY() - _screenCenter.y );
+	float angle = atan2(_mouseDirectionVector.x, _mouseDirectionVector.y);
+	
+	_head->setDirection(sf::Vector2f (3 * sin(angle) , 3 * cos(angle)));
+	
+	
+		
 
 	if (input->isPressed(sf::Keyboard::Space))
 	{
@@ -46,19 +72,7 @@ void Player::handleInput(float dt)
 		
 	}
 
-	if (input->isKeyDown(sf::Keyboard::LShift))
-	{
-		_speed = 100;
-		if (_counter >= 0.1)
-		{
-			Shrink();
-		}
-		
-	}
-	else
-	{
-		_speed = 50;
-	}
+	setPosition(_head->getPosition());
 }
 
 void Player::Shrink()
@@ -78,6 +92,7 @@ void Player::Shrink()
 void Player::Render(sf::RenderWindow* window)
 {
 	Node* current = _head->prev;
+
 
 	while (current != nullptr) {
 		window->draw(current->getShape());
@@ -101,7 +116,7 @@ void Player::Grow(int growth)
 
 void Player::Die()
 {
-
+	exit(1);
 }
 
 void Player::addFront(Node* node)
@@ -109,10 +124,11 @@ void Player::addFront(Node* node)
 	if (_size == 0) {
 		_end = node;
 	} else {
+		_head->prev->prev->next = node;
 		_head->prev = node;
 	}
 
-	_head = node;
+	
 	_size++;
 }
 
@@ -126,6 +142,7 @@ void Player::addEnd(Node* node)
 
 	_end->prev = node;
 	node->next = _end;
+	node->updatePosition(0, _speed);
 	_end = node;
 
 }

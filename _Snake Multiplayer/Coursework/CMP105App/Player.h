@@ -19,16 +19,19 @@ public:
     void Die();
     void update(float dt);
     sf::Vector2f getHeadPosition();
+
+    bool outOfBounds = false;
 private:
     void addFront(Node* node);
     void addEnd(Node* node);
     void addTailNode();
-    float _counter, _size, _speed;
+    float _counter, _outOfBoundsCounter, _size, _speed;
     sf::Color _bodyColor, _headColor;
     sf::Vector2f _scale;
     sf::Vector2f _screenCenter;
     sf::Vector2f _mouseDirectionVector;
     Node* _head, *_end;
+    
 
 };
 
