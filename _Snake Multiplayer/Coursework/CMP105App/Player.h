@@ -6,9 +6,10 @@
 struct playerDATA
 {
     char name[4];
-    int posX = 0;
-    int posY = 0;
-    int id;
+    int id,
+        speed,
+        posX, posY,
+        dirX, dirY;
 };
 
 class Player :
