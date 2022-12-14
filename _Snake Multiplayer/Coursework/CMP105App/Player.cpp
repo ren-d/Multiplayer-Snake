@@ -28,6 +28,15 @@ void Player::Init()
 
 void Player::handleInput(float dt)
 {
+	_playerData.name[0] = 'p';
+	_playerData.name[1] = 'o';
+	_playerData.name[2] = 'g';
+	_playerData.name[3] = 'e';
+
+	_playerData.posX = int(_head->getPosition().x);
+	_playerData.posY = int(_head->getPosition().y);
+
+	_playerData.id = 0;
 	_counter += dt;
 
 	if (outOfBounds) {

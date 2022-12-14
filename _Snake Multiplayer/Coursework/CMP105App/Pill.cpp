@@ -11,8 +11,8 @@ Pill::Pill()
 	setSize(sf::Vector2f(_shape.getLocalBounds().width, _shape.getLocalBounds().height));
 	setPosition(_shape.getPosition());
 	std::cout << distr(gen) << std::endl;
-	sf::Color coler(distr2(gen), distr2(gen), distr2(gen), 255);
-	_shape.setFillColor(coler);
+	sf::Color pillColor(distr2(gen), distr2(gen), distr2(gen), 255);
+	_shape.setFillColor(pillColor);
 	if (distr(gen) > 500) {
 		_shape.setScale(1.2, 1.2);
 		_growthValue = 2;

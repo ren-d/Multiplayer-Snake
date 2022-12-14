@@ -18,7 +18,11 @@ public:
     sf::CircleShape shape;
     Player* player1;
     sf::RectangleShape wall;
-
+    sf::UdpSocket socket;
+    size_t recieved;
+    unsigned short port;
+    sf::IpAddress rIp;
+    char buffer[100];
     const int MAX_PILLS = 300;
 };
 

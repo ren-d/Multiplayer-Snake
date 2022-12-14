@@ -1,8 +1,16 @@
 #pragma once
 #include "Framework/GameObject.h"
-
+#include "SFML/Network.hpp"
 #include "Node.h"
 #include <iostream>
+struct playerDATA
+{
+    char name[4];
+    int posX = 0;
+    int posY = 0;
+    int id;
+};
+
 class Player :
     public GameObject
 {
@@ -19,8 +27,9 @@ public:
     void Die();
     void update(float dt);
     sf::Vector2f getHeadPosition();
-
+    sf::IpAddress _playerIp;
     bool outOfBounds = false;
+    playerDATA _playerData;
 private:
     void addFront(Node* node);
     void addEnd(Node* node);
@@ -32,6 +41,8 @@ private:
     sf::Vector2f _mouseDirectionVector;
     Node* _head, *_end;
     
+    
+   
 
 };
 

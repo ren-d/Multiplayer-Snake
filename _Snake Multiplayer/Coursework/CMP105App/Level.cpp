@@ -20,6 +20,9 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		pills.push_back( new Pill());
 		pills[i]->setWindow(window);
 	}
+
+	player1->_playerIp = sf::IpAddress::getLocalAddress();
+	socket.bind(53846);
 }
 
 Level::~Level()
@@ -34,6 +37,19 @@ void Level::handleInput(float dt)
 
 void Level::render()
 {
+	
+	sf::Int16 test[7];
+	test[0] = 2;
+	test[1] = player1->_playerData.name[0];
+	test[2] = player1->_playerData.name[1];
+	test[3] = player1->_playerData.name[2];
+	test[4] = player1->_playerData.name[3];
+	test[5] = player1->getHeadPosition().x;
+	test[6] = player1->getHeadPosition().y;
+	sf::IpAddress sendIp("127.0.0.1");
+	socket.send(test, sizeof(test), sendIp, 54000);
+
+
 	if (player1->getHeadPosition().x > 1500 || player1->getHeadPosition().x < -1500 ||
 		player1->getHeadPosition().y > 1500 || player1->getHeadPosition().y < -1500)
 	{
@@ -61,6 +77,7 @@ void Level::render()
 
 void Level::update(float dt)
 {
+
 	sf::View view = sf::View(player1->getHeadPosition(), window->getView().getSize());
 	window->setView(view);
 	
@@ -77,4 +94,9 @@ void Level::update(float dt)
 			pills[i] = new Pill();
 		}
 	}
+}
+
+void networkUpdate()
+{
+
 }

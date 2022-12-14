@@ -1,14 +1,23 @@
-﻿  Pill.cpp
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(10,51): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  Level.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(14,65): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(14,40): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(47,38): warning C4244: '=': conversion from 'T' to 'sf::Int16', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(10,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(48,38): warning C4244: '=': conversion from 'T' to 'sf::Int16', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(17,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(23,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(91,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   CMP105App.vcxproj -> C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe
