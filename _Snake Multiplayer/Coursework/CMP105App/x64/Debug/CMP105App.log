@@ -9,15 +9,5 @@ C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\C
           [
               T=unsigned int
           ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(47,38): warning C4244: '=': conversion from 'T' to 'sf::Int16', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(48,38): warning C4244: '=': conversion from 'T' to 'sf::Int16', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(91,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(86,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   CMP105App.vcxproj -> C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe

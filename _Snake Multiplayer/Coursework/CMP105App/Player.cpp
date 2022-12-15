@@ -181,3 +181,7 @@ void Player::update(float dt)
 
 }
 
+playerDATA Player::getPlayerData()
+{
+	return _playerData;
+}

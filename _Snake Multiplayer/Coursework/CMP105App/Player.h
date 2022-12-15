@@ -30,7 +30,7 @@ public:
     sf::Vector2f getHeadPosition();
     sf::IpAddress _playerIp;
     bool outOfBounds = false;
-    playerDATA _playerData;
+    playerDATA getPlayerData();
 private:
     void addFront(Node* node);
     void addEnd(Node* node);
@@ -40,6 +40,7 @@ private:
     sf::Vector2f _scale;
     sf::Vector2f _screenCenter;
     sf::Vector2f _mouseDirectionVector;
+    playerDATA _playerData;
     Node* _head, *_end;
     
     

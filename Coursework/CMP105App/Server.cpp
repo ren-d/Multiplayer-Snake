@@ -4,9 +4,10 @@
 struct playerDATA
 {
 	char name[4];
-	int posX;
-	int posY;
-	int id;
+	int id,
+		speed,
+		posX, posY,
+		dirX, dirY;
 };
 int main()
 {
@@ -14,23 +15,25 @@ int main()
 	std::vector<playerDATA> players;
 	std::vector<unsigned short> ports;
 	sf::Int16 data[7];
-
+	sf::Packet packet;
 	std::size_t received = 0;
 	sf::UdpSocket socket;
-	
+	playerDATA player;
 	// UDP socket:
 	sf::IpAddress sender;
 	unsigned short port;
 	socket.bind(54000);
 	while (true)
 	{
-		if (socket.receive(data, sizeof(data), received, sender, port) != sf::Socket::Done)
+		if (socket.receive(packet, sender, port) != sf::Socket::Done)
 		{
 			// error...
 		}
 		else
 		{
-			std::cout << data[0] << " " << (char)data[1] << (char)data[2] << (char)data[3] << (char)data[4] << " Position X: " << data[5] << " Position Y: " << data[6] << std::endl;
+			packet >> player.id >> player.name >> player.posX >> player.posY;
+			std::cout << player.id << " " << player.name << std::endl;
+			std::cout << "x: " << player.posX << " y: " << player.posY << std::endl;
 		}
 
 
