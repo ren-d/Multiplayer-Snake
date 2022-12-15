@@ -2,16 +2,27 @@
 
 NetworkManager::NetworkManager()
 {
-
+	_serverIp = sf::IpAddress("127.0.0.1");
 }
 
 NetworkManager::~NetworkManager()
 {
 
 }
-
-sf::Packet NetworkManager::udpSendPacket(DataType type)
+void NetworkManager::tcpSendPacket(int id)
 {
+	_sendPacket << id;
+	_tSocket.send(_sendPacket);
+	_sendPacket.clear();
+}
+sf::Packet NetworkManager::udpSendPacket(int id)
+{
+	sf::Packet packet;
+
+	packet << id;
+
+	sf::IpAddress sendIp("127.0.0.1");
+	_uSocket.send(packet, sendIp, 54000);
 	return _sendPacket;
 }
 
@@ -23,7 +34,7 @@ sf::Packet NetworkManager::udpRecievePacket()
 	return _rcvPacket;
 }
 
-sf::Packet NetworkManager::tcpSendPacket()
+void NetworkManager::tcpHandshake()
 {
 	
 	sf::Socket::Status status = _tSocket.connect("127.0.0.1", 53000);
@@ -32,7 +43,7 @@ sf::Packet NetworkManager::tcpSendPacket()
 		// error...
 	}
 
-	return _sendPacket;
+	
 }
 
 sf::Packet NetworkManager::tcpRecievePacket()
@@ -66,5 +77,5 @@ sf::Packet NetworkManager::tcpRecievePacket()
 
 void NetworkManager::setPort(unsigned short port)
 {
-	_uSocket.bind(port);
+	_uSocket.bind(53000);
 }

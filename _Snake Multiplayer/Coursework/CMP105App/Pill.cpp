@@ -35,6 +35,7 @@ void Pill::init()
 		sf::Vector2f(_shape.getLocalBounds().width,
 			_shape.getLocalBounds().height)));
 }
+
 void Pill::render(sf::RenderWindow* wwindow)
 {
 	wwindow->draw(_shape);

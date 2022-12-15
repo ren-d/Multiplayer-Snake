@@ -9,7 +9,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	/**/
 	networkManager = new NetworkManager();
 	networkManager->setPort(53846);
-	networkManager->tcpSendPacket();
+	networkManager->tcpHandshake();
 	std::string bruh;
 	
 
@@ -78,16 +78,17 @@ void Level::update(float dt)
 	window->setView(view);
 	
 	player1->update(dt);
-
+	pillDATA pillData;
 	for (int i = 0; i < pills.size() - 1; i++)
 	{
 		if (Collision::checkBoundingCircle(pills[i], player1))
 		{
 			std::cout << "what" << std::endl;
 			player1->Grow(pills[i]->_growthValue);
-			
+			networkManager->udpSendPacket(pills[i]->_data.id);
+			networkManager->udpRecievePacket() >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
 			delete pills[i];
-			pills[i] = new Pill();
+			pills[i] = new Pill(pillData);
 		}
 	}
 }

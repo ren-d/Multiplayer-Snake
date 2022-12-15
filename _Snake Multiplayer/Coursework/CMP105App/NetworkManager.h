@@ -34,10 +34,12 @@ public:
 	NetworkManager();
 	~NetworkManager();
 
-	sf::Packet udpSendPacket(DataType type);
+	sf::Packet udpSendPacket(int id);
 	sf::Packet udpRecievePacket();
-	sf::Packet tcpSendPacket();
+	void tcpSendPacket(int id);
 	sf::Packet tcpRecievePacket();
+
+	void tcpHandshake();
 
 	void setPort(unsigned short port);
 	unsigned short getPort();
