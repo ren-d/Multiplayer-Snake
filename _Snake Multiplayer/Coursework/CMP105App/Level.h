@@ -3,6 +3,7 @@
 #include "Framework/Collision.h"
 #include "Player.h"
 #include "Pill.h"
+#include "NetworkManager.h"
 class Level :
     BaseLevel
 {
@@ -14,13 +15,13 @@ public:
     void update(float dt);
     void render();
 
+    NetworkManager* networkManager;
     std::vector<Pill*> pills;
     sf::CircleShape shape;
     Player* player1;
     sf::RectangleShape wall;
-    sf::UdpSocket socket;
-    size_t recieved;
-    unsigned short port;
+
+
     sf::IpAddress rIp;
     char buffer[100];
     const int MAX_PILLS = 300;

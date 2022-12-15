@@ -1,13 +1,20 @@
-﻿  Level.cpp
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(14,65): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+﻿  GhostManager.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\GhostManager.cpp(19,11): warning C4101: 'rcvDataType': unreferenced local variable
+  Level.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(87,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Main.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Main.cpp(71,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Pill.cpp
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(25,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
-              T=unsigned int
+              T=float
           ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(14,40): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(25,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
-              T=unsigned int
+              T=float
           ]
-C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Level.cpp(86,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Pill.cpp(32,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   CMP105App.vcxproj -> C:\Users\Duncan\Desktop\MultiPlayer Snake\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe

@@ -1,17 +1,40 @@
 #pragma once
 #include "SFML/Network.hpp"
-#include "GhostManager.h"
+#include <iostream>
 
 enum class DataType {
-	PLAYER, PILL, TEXT, EVENT
+	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4
 };
+
+enum class PacketType {
+	PT_HELLO
+};
+
+
+
+
+struct textDATA
+{
+
+};
+
+struct eventDATA
+{
+
+};
+
+struct worldDATA
+{
+
+};
+
 class NetworkManager
 {
 public:
 	NetworkManager();
 	~NetworkManager();
 
-	sf::Packet udpSendPacket();
+	sf::Packet udpSendPacket(DataType type);
 	sf::Packet udpRecievePacket();
 	sf::Packet tcpSendPacket();
 	sf::Packet tcpRecievePacket();
@@ -26,7 +49,7 @@ public:
 
 private:
 
-
+	int test = 0;
 	sf::IpAddress _localIp, _serverIp;
 	sf::Packet _sendPacket, _rcvPacket;
 	sf::UdpSocket _uSocket;

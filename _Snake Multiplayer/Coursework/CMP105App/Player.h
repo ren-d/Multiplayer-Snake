@@ -3,8 +3,12 @@
 #include "SFML/Network.hpp"
 #include "Node.h"
 #include <iostream>
+
+
+
 struct playerDATA
 {
+
     char name[4];
     int id,
         speed,
@@ -28,9 +32,10 @@ public:
     void Die();
     void update(float dt);
     sf::Vector2f getHeadPosition();
-    sf::IpAddress _playerIp;
-    bool outOfBounds = false;
     playerDATA getPlayerData();
+
+    bool outOfBounds = false;
+
 private:
     void addFront(Node* node);
     void addEnd(Node* node);

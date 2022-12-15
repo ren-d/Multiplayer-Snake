@@ -6,22 +6,29 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	gameState = gs;
 	audio = aud;
 
+	/**/
+	networkManager = new NetworkManager();
+	networkManager->setPort(53846);
+	networkManager->tcpSendPacket();
+	std::string bruh;
 	
-	shape = sf::CircleShape(10);
-	wall = sf::RectangleShape(sf::Vector2f(100, 100));
-	wall.setFillColor(sf::Color::Black);
-	shape.setFillColor(sf::Color::Magenta);
-	shape.setPosition(window->getSize().x / 2, window->getSize().y / 2);
+
+
+
 	player1 = new Player(sf::Vector2f(window->getView().getSize().x / 2, window->getView().getSize().y / 2));
 	player1->setInput(in);
 	sf::View* view = new sf::View(player1->getHeadPosition(), window->getView().getSize());
+
+	pillDATA pillData;
 	for (int i = 0; i < MAX_PILLS; i++)
 	{
-		pills.push_back( new Pill());
+		networkManager->tcpRecievePacket() >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
+		Pill* newPill = new Pill(pillData);
+		pills.push_back(newPill);
 		pills[i]->setWindow(window);
 	}
 
-	socket.bind(53846);
+
 }
 
 Level::~Level()
@@ -36,14 +43,9 @@ void Level::handleInput(float dt)
 
 void Level::render()
 {
-	sf::Packet packet;
-
-	packet << player1->getPlayerData().id << player1->getPlayerData().name << player1->getPlayerData().posX << player1->getPlayerData().posY << player1->getPlayerData().dirX << player1->getPlayerData().dirY << player1->getPlayerData().speed;
-
-	sf::IpAddress sendIp("127.0.0.1");
-	socket.send(packet, sendIp, 54000);
 
 
+	
 	if (player1->getHeadPosition().x > 1500 || player1->getHeadPosition().x < -1500 ||
 		player1->getHeadPosition().y > 1500 || player1->getHeadPosition().y < -1500)
 	{

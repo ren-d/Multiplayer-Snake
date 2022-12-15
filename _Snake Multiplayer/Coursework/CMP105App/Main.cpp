@@ -65,6 +65,9 @@ void windowProcess(sf::RenderWindow* window, Input* in)
 
 int main()
 {
+	std::cout << "input server ip" << std::endl;
+	std::string serverip;
+	std::cin >> serverip;
 	srand(time(NULL));
 	//Create the window
 	sf::RenderWindow window(sf::VideoMode(640, 480), "CMP105_Coursework");
@@ -82,6 +85,7 @@ int main()
 	// Game Loop
 	while (window.isOpen())
 	{
+		
 		//Process window events
 		windowProcess(&window, &input);
 		window.clear(sf::Color::Black);
