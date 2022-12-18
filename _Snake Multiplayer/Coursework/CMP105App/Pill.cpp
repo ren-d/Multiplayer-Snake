@@ -31,6 +31,10 @@ void Pill::init()
 	
 	_growthValue = _data.growthValue;
 
+	if (_growthValue == 1)
+	{
+		_shape.setScale(sf::Vector2f(0.7, 0.7));
+	}
 	setCollisionBox(sf::FloatRect(_shape.getPosition(),
 		sf::Vector2f(_shape.getLocalBounds().width,
 			_shape.getLocalBounds().height)));

@@ -86,7 +86,15 @@ void Level::update(float dt)
 			std::cout << "what" << std::endl;
 			player1->Grow(pills[i]->_growthValue);
 			networkManager->udpSendPacket(pills[i]->_data.id);
-			networkManager->udpRecievePacket() >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
+
+			int thing;
+			networkManager->udpRecievePacket() >> thing >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
+
+			std::cout << pillData.id << std::endl;
+			std::cout << pillData.x<< std::endl;
+			std::cout << pillData.y << std::endl;
+			std::cout << pillData.growthValue << std::endl;
+			
 			delete pills[i];
 			pills[i] = new Pill(pillData);
 		}

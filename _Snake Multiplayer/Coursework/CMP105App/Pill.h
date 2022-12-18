@@ -5,7 +5,7 @@
 #include <random>
 struct pillDATA
 {
-    int id,
+    sf::Int16 id,
         x, y,
         growthValue;
 };
