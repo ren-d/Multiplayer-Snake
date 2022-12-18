@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Network.hpp"
 #include <iostream>
-
+#include "Player.h"
 enum class DataType {
 	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4
 };
@@ -35,6 +35,7 @@ public:
 	~NetworkManager();
 
 	sf::Packet udpSendPacket(int id);
+	sf::Packet udpSendPacket(playerDATA data);
 	sf::Packet udpRecievePacket();
 	void tcpSendPacket(int id);
 	sf::Packet tcpRecievePacket();
@@ -49,7 +50,7 @@ public:
 
 	sf::IpAddress getLocalIp();
 
-private:
+
 
 	int test = 0;
 	sf::IpAddress _localIp, _serverIp;

@@ -12,6 +12,19 @@ Player::Player(sf::Vector2f screenCenter)
 	setSize(sf::Vector2f(_head->getShape().getLocalBounds().width, _head->getShape().getLocalBounds().height));
 	Init();
 	_counter = 0;
+
+	_playerData.name[0] = 'p';
+	_playerData.name[1] = 'o';
+	_playerData.name[2] = 'g';
+	_playerData.name[3] = 'e';
+
+	_playerData.posX = int(_head->getPosition().x);
+	_playerData.posY = int(_head->getPosition().y);
+
+	_playerData.dirX = int(_head->getDirection().x);
+	_playerData.dirY = int(_head->getDirection().y);
+	_playerData.id = 0;
+	_playerData.speed = _speed;
 }
 
 Player::~Player()
@@ -62,7 +75,17 @@ void Player::handleInput(float dt)
 	}
 	else
 	{
-		_speed = 50;
+		if (input->isPressed(sf::Keyboard::Space) && isstop == false)
+		{
+			isstop = true;
+			_speed = 0;
+		}
+		else if (input->isPressed(sf::Keyboard::Space) && isstop == true)
+		{
+			isstop = false;
+			_speed = 50;
+		}
+		
 	}
 
 	_mouseDirectionVector = sf::Vector2f( input->getMouseX() - _screenCenter.x,  input->getMouseY() - _screenCenter.y );
@@ -73,13 +96,7 @@ void Player::handleInput(float dt)
 	
 		
 
-	if (input->isPressed(sf::Keyboard::Space))
-	{
-		
-			Grow(20);
-		
-		
-	}
+
 
 	setPosition(_head->getPosition());
 }

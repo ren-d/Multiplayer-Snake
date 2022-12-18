@@ -12,6 +12,7 @@ struct playerDATA
 		speed,
 		posX, posY,
 		dirX, dirY;
+	unsigned short port;
 };
 
 struct pillDATA
@@ -61,7 +62,8 @@ sf::UdpSocket socket;
 sf::Packet packet;
 sf::IpAddress sender;
 unsigned short port;
-
+std::vector<playerDATA*> players;
+std::vector<unsigned short> ports;
 void udpConnection()
 {
 	socket.bind(54000);
@@ -76,21 +78,52 @@ void udpConnection()
 		}
 		else
 		{
+			std::cout << port << std::endl;
+			int dataType;
+			packet >> dataType;
+			switch (static_cast<DataType>(dataType)) {
+				case DataType::PLAYER:
+					if (!std::count(ports.begin(), ports.end(), port))
+					{
+						
+						ports.push_back(port);
+						playerDATA* newPlayer = new playerDATA();
+						packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY;
+						newPlayer->id = players.size();
+						newPlayer->port = port;
+						players.push_back(newPlayer);
+
+						std::cout << newPlayer->name << newPlayer->speed << newPlayer->posX << newPlayer->posY << newPlayer->dirX << newPlayer->dirY  << std::endl;
+						packet.clear();
+
+
+					}
+					break;
+				case DataType::PILL:
+					int id;
+					packet >> id;
+					pills[id] = generatePill(pills[id], id);
+					packet.clear();
+
+					packet << static_cast<int>(DataType::PILL) << pills[id].id << pills[id].posX << pills[id].posY << pills[id].growthValue;
+
+					std::cout << pills[id].id << std::endl;
+					std::cout << pills[id].posX << std::endl;
+					std::cout << pills[id].posY << std::endl;
+					std::cout << pills[id].growthValue << std::endl;
+
+					for (int i = 0; i < ports.size(); i++)
+					{
+						socket.send(packet, sender, ports[i]);
+
+					}
+					
+					packet.clear();
+
+					break;
+			}
 			
-			int id;
-			packet >> id;
-
-			pills[id] = generatePill(pills[id], id);
-			packet.clear();
-
-			packet << static_cast<int>(DataType::PILL) << pills[id].id << pills[id].posX << pills[id].posY << pills[id].growthValue;
-
-			std::cout << pills[id].id << std::endl;
-			std::cout << pills[id].posX << std::endl;
-			std::cout << pills[id].posY << std::endl;
-			std::cout << pills[id].growthValue << std::endl;
-			socket.send(packet, sender, port);
-			packet.clear();
+			
 	
 
 		}

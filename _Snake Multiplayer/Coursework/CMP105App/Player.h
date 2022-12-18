@@ -47,7 +47,7 @@ private:
     sf::Vector2f _mouseDirectionVector;
     playerDATA _playerData;
     Node* _head, *_end;
-    
+    bool isstop = false;
     
    
 

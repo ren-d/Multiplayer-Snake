@@ -28,6 +28,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		pills[i]->setWindow(window);
 	}
 
+	networkManager->udpSendPacket(player1->getPlayerData());
 
 }
 
@@ -73,12 +74,15 @@ void Level::render()
 
 void Level::update(float dt)
 {
+	pillDATA pillData;
+	int type;
+
 
 	sf::View view = sf::View(player1->getHeadPosition(), window->getView().getSize());
 	window->setView(view);
 	
 	player1->update(dt);
-	pillDATA pillData;
+	
 	for (int i = 0; i < pills.size() - 1; i++)
 	{
 		if (Collision::checkBoundingCircle(pills[i], player1))
@@ -87,17 +91,23 @@ void Level::update(float dt)
 			player1->Grow(pills[i]->_growthValue);
 			networkManager->udpSendPacket(pills[i]->_data.id);
 
-			int thing;
-			networkManager->udpRecievePacket() >> thing >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
-
-			std::cout << pillData.id << std::endl;
-			std::cout << pillData.x<< std::endl;
-			std::cout << pillData.y << std::endl;
-			std::cout << pillData.growthValue << std::endl;
 			
 			delete pills[i];
-			pills[i] = new Pill(pillData);
+			pills[i] = new Pill();
 		}
+	}
+
+	networkManager->udpRecievePacket() >> type >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
+	if (type == 1)
+	{
+		
+		std::cout << pillData.id << std::endl;
+		std::cout << pillData.x << std::endl;
+		std::cout << pillData.y << std::endl;
+		std::cout << pillData.growthValue << std::endl;
+
+		delete pills[pillData.id];
+		pills[pillData.id] = new Pill(pillData);
 	}
 }
 
