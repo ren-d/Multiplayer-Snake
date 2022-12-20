@@ -13,7 +13,8 @@ struct playerDATA
     int id,
         speed,
         posX, posY,
-        dirX, dirY;
+        size;
+    float dirX, dirY;
 };
 
 class Player :
@@ -21,22 +22,24 @@ class Player :
 {
 public:
     Player(sf::Vector2f newPosition);
+    Player() {};
     ~Player();
 
     
     void Init();
-    void handleInput(float dt);
+    virtual void handleInput(float dt);
     void Render(sf::RenderWindow* window);
     void Grow(int growth);
-    void Shrink();
+    void Shrink(int value);
     void Die();
     void update(float dt);
+    void setId(int id);
     sf::Vector2f getHeadPosition();
     playerDATA getPlayerData();
 
     bool outOfBounds = false;
 
-private:
+protected:
     void addFront(Node* node);
     void addEnd(Node* node);
     void addTailNode();

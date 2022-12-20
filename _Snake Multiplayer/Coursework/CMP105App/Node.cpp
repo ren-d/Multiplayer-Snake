@@ -40,7 +40,7 @@ void Node::updatePosition(float dt, float speed)
 bool Node::distanceToNextNode()
 {
 	float magnitude = VectorHelper::magnitude(sf::Vector2f(next->_xPos - _xPos, next->_yPos - _yPos));
-	if (magnitude > 2) {
+	if (magnitude > 3) {
 		return true;
 	}
 

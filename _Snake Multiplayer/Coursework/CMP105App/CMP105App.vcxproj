@@ -168,6 +168,7 @@
     <ClCompile Include="Framework\SoundObject.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
     <ClCompile Include="Framework\VectorHelper.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostManager.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Framework\SoundObject.h" />
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="Framework\VectorHelper.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="NetworkManager.h" />

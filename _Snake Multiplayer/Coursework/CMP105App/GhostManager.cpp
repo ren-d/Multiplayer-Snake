@@ -16,29 +16,55 @@ void GhostManager::setNetworkManager(NetworkManager* networkManager)
 
 void GhostManager::update(float dt)
 {
-	DataType rcvDataType;
-	int type;
-	_networkManager->udpRecievePacket() >> type;
+	for (Ghost* ghost : _ghosts)
+	{
+		for (playerDATA* data : _playerData)
+		{
+			if (ghost->getPlayerData().id == data->id)
+			{
+				ghost->updatePlayerData(*data);
+			}
+		}
 
-	unpackData(static_cast<DataType>(type));
+		ghost->update(dt);
+	}
 }
 
-void GhostManager::unpackData(DataType type)
+void GhostManager::updateGhostData(playerDATA player)
 {
-	switch (type)
+	
+	for (playerDATA* data : _playerData)
 	{
-	case DataType::PLAYER:
+		if (data->id == player.id)
+		{
+			
+			data->dirX = player.dirX;
+			data->dirY = player.dirY;
+			data->speed = player.speed;
+			data->size = player.size;
 
-		break;
-	case DataType::PILL:
-		break;
-	case DataType::TEXT:
-		break;
-	case DataType::EVENT:
-		break;
-	case DataType::WORLD:
-		break;
-	default:
-		break;
+			
+		}
 	}
+}
+
+void GhostManager::render(sf::RenderWindow* window)
+{
+	for (Ghost* ghost : _ghosts)
+	{
+		ghost->Render(window);
+	}
+}
+
+void GhostManager::addGhost(playerDATA data)
+{
+	std::cout << "id: " << data.id << std::endl;
+	std::cout << "name: " << data.name << std::endl;
+	std::cout << "posX: " << data.posX << std::endl;
+	std::cout << "posY: " << data.posY << std::endl;
+	std::cout << "dirX: " << data.dirX << std::endl;
+	std::cout << "dirY: " << data.dirY << std::endl;
+	std::cout << "speed: " << data.speed << std::endl;
+
+	_ghosts.push_back(new Ghost(data));
 }

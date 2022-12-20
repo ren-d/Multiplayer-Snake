@@ -6,7 +6,7 @@ Player::Player(sf::Vector2f screenCenter)
 	_speed = 50;
 	_scale = sf::Vector2f(1, 1);
 	_head = new Node(1, 0,10, 10, sf::Color::Blue, &_scale);
-	_end = new Node(1, 0, 8, 10, sf::Color::Cyan, &_scale);
+	_end = new Node(1, 0, 7, 10, sf::Color::Cyan, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
 	setSize(sf::Vector2f(_head->getShape().getLocalBounds().width, _head->getShape().getLocalBounds().height));
@@ -39,6 +39,10 @@ void Player::Init()
 	}
 }
 
+void Player::setId(int id)
+{
+	_playerData.id = id;
+}
 void Player::handleInput(float dt)
 {
 	_playerData.name[0] = 'p';
@@ -50,6 +54,7 @@ void Player::handleInput(float dt)
 	_playerData.posY = int(_head->getPosition().y);
 
 	_playerData.id = 0;
+	_playerData.size = _size;
 	_counter += dt;
 
 	if (outOfBounds) {
@@ -69,7 +74,7 @@ void Player::handleInput(float dt)
 		_speed = 100;
 		if (_counter >= 0.1)
 		{
-			Shrink();
+			Shrink(1);
 		}
 
 	}
@@ -101,17 +106,21 @@ void Player::handleInput(float dt)
 	setPosition(_head->getPosition());
 }
 
-void Player::Shrink()
+void Player::Shrink(int value)
 {
-	Node* temp = _end->next;
-	temp->prev = nullptr;
-	delete _end;
-	_end = temp;
+	for (int i = 0; i < value; i++)
+	{
+		Node* temp = _end->next;
+		temp->prev = nullptr;
+		delete _end;
+		_end = temp;
 
-	_size--;
-	_scale.x -= 0.002;
-	_scale.y -= 0.002;
-	_counter = 0;
+		_size--;
+		_scale.x -= 0.002;
+		_scale.y -= 0.002;
+		_counter = 0;
+	}
+
 }
 
 

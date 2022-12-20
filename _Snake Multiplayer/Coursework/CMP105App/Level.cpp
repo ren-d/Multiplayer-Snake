@@ -12,6 +12,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	networkManager->tcpHandshake();
 	std::string bruh;
 	
+	ghostManager = new GhostManager();
 
 
 
@@ -29,6 +30,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	}
 
 	networkManager->udpSendPacket(player1->getPlayerData());
+
 
 }
 
@@ -65,7 +67,7 @@ void Level::render()
 		
 		pills[i]->render(window);
 	}
-
+	ghostManager->render(window);
 	player1->Render(window);
 	
 	
@@ -74,15 +76,18 @@ void Level::render()
 
 void Level::update(float dt)
 {
-	pillDATA pillData;
-	int type;
+	
+	ghostManager->update(dt);
+	int type = -1;
 
 
 	sf::View view = sf::View(player1->getHeadPosition(), window->getView().getSize());
 	window->setView(view);
 	
 	player1->update(dt);
+
 	
+
 	for (int i = 0; i < pills.size() - 1; i++)
 	{
 		if (Collision::checkBoundingCircle(pills[i], player1))
@@ -96,22 +101,47 @@ void Level::update(float dt)
 			pills[i] = new Pill();
 		}
 	}
-
-	networkManager->udpRecievePacket() >> type >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
-	if (type == 1)
+	sf::Packet packet = networkManager->udpRecievePacket();
+	packet >> type;
+	
+	switch (static_cast<DataType>(type))
 	{
+	case DataType::PLAYER:
 		
+		int id;
+		packet >> id;
+		player1->setId(id);
+		int serverplayers;
+		packet >> serverplayers;
+		std::cout << "tage" << serverplayers << std::endl;
+		for (int i = 0; i < serverplayers; i++)
+		{
+			playerDATA data;
+			packet >> data.id >> data.name >> data.speed >>data.posX >> data.posY >> data.dirX >> data.dirY >> data.size;
+			if (data.id != player1->getPlayerData().id)
+			{
+				ghostManager->addGhost(data);
+			}
+			
+
+		}
+		break;
+	case DataType::PILL:
+		pillDATA pillData;
+		packet >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
 		std::cout << pillData.id << std::endl;
 		std::cout << pillData.x << std::endl;
 		std::cout << pillData.y << std::endl;
 		std::cout << pillData.growthValue << std::endl;
-
+		
 		delete pills[pillData.id];
 		pills[pillData.id] = new Pill(pillData);
+
+		break;
 	}
+
 }
 
 void networkUpdate()
 {
-
 }

@@ -11,7 +11,8 @@ struct playerDATA
 	int id,
 		speed,
 		posX, posY,
-		dirX, dirY;
+		size;
+	float dirX, dirY;
 	unsigned short port;
 };
 
@@ -39,6 +40,7 @@ unsigned short port;
 std::vector<playerDATA*> players;
 std::vector<unsigned short> ports;
 
+int playerno = 0;
 int main()
 {
 	std::vector<sf::TcpSocket*> clients;
@@ -85,7 +87,8 @@ int main()
 					std::cout << "WINNER" << std::endl;
 					if (isLoaded != true)
 					{
-						for (int i = 0; i < 300; i++)
+						playerno++;
+						for (int i = 0; i < pills.size(); i++)
 						{
 							packet << static_cast<int>(DataType::PILL) << pills[i].id << pills[i].posX << pills[i].posY << pills[i].growthValue;
 							if (newClient->send(packet) != sf::Socket::Done)
@@ -126,7 +129,6 @@ void udpConnection()
 }
 
 
-
 void processRecievedPacket(sf::Packet packet)
 {
 	std::cout << port << std::endl;
@@ -139,16 +141,33 @@ void processRecievedPacket(sf::Packet packet)
 
 			ports.push_back(port);
 			playerDATA* newPlayer = new playerDATA();
-			packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY;
-			newPlayer->id = players.size();
+			packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY >> newPlayer->size;
+			newPlayer->id = playerno;
 			newPlayer->port = port;
 			players.push_back(newPlayer);
 
-			std::cout << newPlayer->name << newPlayer->speed << newPlayer->posX << newPlayer->posY << newPlayer->dirX << newPlayer->dirY << std::endl;
+			std::cout << newPlayer->name << newPlayer->speed << newPlayer->posX << newPlayer->posY << newPlayer->dirX << newPlayer->dirY << newPlayer->size<< std::endl;
 			packet.clear();
 
+			packet << static_cast<int>(DataType::PLAYER) << newPlayer->id << playerno;
+
+			for (playerDATA* player : players)
+			{
+				packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
+			}
+
+			for (int i = 0; i < ports.size(); i++)
+			{
+				socket.send(packet, sender, ports[i]);
+			}
+			
+			packet.clear();
+		}
+		else
+		{
 
 		}
+
 		break;
 	case DataType::PILL:
 		int id;

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Pill.h"
 #include "NetworkManager.h"
+#include "GhostManager.h"
 class Level :
     BaseLevel
 {
@@ -21,6 +22,7 @@ public:
     Player* player1;
     sf::RectangleShape wall;
 
+    GhostManager* ghostManager;
 
     sf::IpAddress rIp;
     char buffer[100];
