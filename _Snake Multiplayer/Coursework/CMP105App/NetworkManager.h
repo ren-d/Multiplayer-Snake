@@ -2,8 +2,8 @@
 #include "SFML/Network.hpp"
 #include <iostream>
 #include "Player.h"
-enum class DataType {
-	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4
+enum class NetworkType {
+	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5
 };
 
 enum class PacketType {
@@ -35,7 +35,7 @@ public:
 	~NetworkManager();
 
 	sf::Packet udpSendPacket(int id);
-	sf::Packet udpSendPacket(playerDATA data);
+	sf::Packet udpSendPacket(playerDATA data, bool isInit);
 	sf::Packet udpRecievePacket();
 	void tcpSendPacket(int id);
 	sf::Packet tcpRecievePacket();

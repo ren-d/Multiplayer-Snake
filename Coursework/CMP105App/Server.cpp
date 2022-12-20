@@ -2,8 +2,8 @@
 #include <iostream>
 #include <random>
 #include <thread>
-enum class DataType {
-	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4
+enum class NetworkType {
+	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5
 };
 struct playerDATA
 {
@@ -90,7 +90,7 @@ int main()
 						playerno++;
 						for (int i = 0; i < pills.size(); i++)
 						{
-							packet << static_cast<int>(DataType::PILL) << pills[i].id << pills[i].posX << pills[i].posY << pills[i].growthValue;
+							packet << static_cast<int>(NetworkType::PILL) << pills[i].id << pills[i].posX << pills[i].posY << pills[i].growthValue;
 							if (newClient->send(packet) != sf::Socket::Done)
 							{
 								// error...
@@ -131,72 +131,82 @@ void udpConnection()
 
 void processRecievedPacket(sf::Packet packet)
 {
-
+	playerDATA* newPlayer;
 	int dataType;
 	packet >> dataType;
-	switch (static_cast<DataType>(dataType)) {
-	case DataType::PLAYER:
-		if (!std::count(ports.begin(), ports.end(), port))
+	switch (static_cast<NetworkType>(dataType)) {
+	case NetworkType::PLAYER_INIT:
+		if (std::count(ports.begin(), ports.end(), port))
 		{
-			int temp;
-			packet >> temp;
-			ports.push_back(port);
-			playerDATA* newPlayer = new playerDATA();
-			packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY >> newPlayer->size;
-			newPlayer->id = playerno;
-			newPlayer->port = port;
-			players.push_back(newPlayer);
+			std::cout << "port already in use" << std::endl;
+			break;
+		}
 
-			std::cout << newPlayer->name << newPlayer->speed << newPlayer->posX << newPlayer->posY << newPlayer->dirX << newPlayer->dirY << newPlayer->size<< std::endl;
-			packet.clear();
+		int temp;
+		packet >> temp;
+		ports.push_back(port);
+		newPlayer = new playerDATA();
+		packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY >> newPlayer->size;
+		newPlayer->id = playerno;
+		newPlayer->port = port;
+		players.push_back(newPlayer);
 
-			packet << static_cast<int>(DataType::PLAYER) << newPlayer->id << playerno;
+		std::cout << newPlayer->name << newPlayer->speed << newPlayer->posX << newPlayer->posY << newPlayer->dirX << newPlayer->dirY << newPlayer->size << std::endl;
+		packet.clear();
 
-			for (playerDATA* player : players)
+		packet << static_cast<int>(NetworkType::PLAYER_INIT) << newPlayer->id << playerno;
+
+		for (playerDATA* player : players)
+		{
+			packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
+		}
+
+		for (int i = 0; i < ports.size(); i++)
+		{
+			socket.send(packet, sender, ports[i]);
+		}
+
+		packet.clear();
+
+		break;
+	case NetworkType::PLAYER:
+		int pid;
+		packet >> pid;
+		
+		for (playerDATA* player : players)
+		{
+			if (player->id == pid)
 			{
-				packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
-			}
+				
+				packet >> player->name >> player->speed >> player->posX >> player->posY >> player->dirX >> player->dirY >> player->size;
+	
 
-			for (int i = 0; i < ports.size(); i++)
+			}
+		}
+		packet.clear();
+		packet << static_cast<int>(NetworkType::PLAYER) << playerno;
+		for (playerDATA* player : players)
+		{
+			packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
+		}
+
+		for (int i = 0; i < ports.size(); i++)
+		{
+			if (ports[i] != port)
 			{
 				socket.send(packet, sender, ports[i]);
 			}
 			
-			packet.clear();
 		}
-		else
-		{
-			int pid;
-			packet >> pid;
-			
-			for (playerDATA* player : players)
-			{
-				if (player->id == pid)
-				{
-					
-					packet >> player->name >> player->speed >> player->posX >> player->posY >> player->dirX >> player->dirY >> player->size;
-
-				}
-			}
-			packet.clear();
-			packet << static_cast<int>(DataType::PLAYER) << 0 << playerno;
-			for (playerDATA* player : players)
-			{
-				packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
-			}
-
-
-			packet.clear();
-		}
-
+		packet.clear();
 		break;
-	case DataType::PILL:
+	case NetworkType::PILL:
 		int id;
 		packet >> id;
 		pills[id] = generatePill(pills[id], id);
 		packet.clear();
 
-		packet << static_cast<int>(DataType::PILL) << pills[id].id << pills[id].posX << pills[id].posY << pills[id].growthValue;
+		packet << static_cast<int>(NetworkType::PILL) << pills[id].id << pills[id].posX << pills[id].posY << pills[id].growthValue;
 
 		std::cout << pills[id].id << std::endl;
 		std::cout << pills[id].posX << std::endl;

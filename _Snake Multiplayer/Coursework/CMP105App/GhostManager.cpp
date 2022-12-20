@@ -16,13 +16,16 @@ void GhostManager::setNetworkManager(NetworkManager* networkManager)
 
 void GhostManager::update(float dt)
 {
+
 	for (Ghost* ghost : _ghosts)
 	{
+		std::cout <<"GHOAST: " <<ghost->getPlayerData().id << std::endl;
 		for (playerDATA* data : _playerData)
 		{
+
 			if (ghost->getPlayerData().id == data->id)
 			{
-		
+
 				ghost->updatePlayerData(*data);
 			}
 		}
@@ -64,7 +67,7 @@ void GhostManager::addGhost(playerDATA data)
 	if (data.id > _ghosts.size())
 	{
 		_ghosts.push_back(new Ghost(data));
-		_playerData.push_back(&data);
+		_playerData.push_back(new playerDATA(data));
 	}
 	
 }

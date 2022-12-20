@@ -29,7 +29,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		pills[i]->setWindow(window);
 	}
 
-	networkManager->udpSendPacket(player1->getPlayerData());
+	networkManager->udpSendPacket(player1->getPlayerData(), true);
 
 
 }
@@ -103,10 +103,10 @@ void Level::update(float dt)
 	}
 	sf::Packet packet = networkManager->udpRecievePacket();
 	packet >> type;
-	
-	switch (static_cast<DataType>(type))
+	int serverplayers;
+	switch (static_cast<NetworkType>(type))
 	{
-	case DataType::PLAYER:
+	case NetworkType::PLAYER_INIT:
 		
 		int id;
 		packet >> id;
@@ -115,9 +115,8 @@ void Level::update(float dt)
 			player1->setId(id);
 		}
 		
-		int serverplayers;
+
 		packet >> serverplayers;
-		std::cout << "tage" << serverplayers << std::endl;
 		for (int i = 0; i < serverplayers; i++)
 		{
 			playerDATA data;
@@ -125,16 +124,32 @@ void Level::update(float dt)
 		
 			if (data.id != player1->getPlayerData().id)
 			{
-				std::cout << "THE PLAYER ID" << player1->getPlayerData().id<< std::endl;
-				std::cout << "THE OTHER ID" << data.id << std::endl;
 				ghostManager->addGhost(data);
 				
 			}
 			
 
 		}
+		packet.clear();
 		break;
-	case DataType::PILL:
+	case NetworkType::PLAYER:
+		
+		packet >> serverplayers;
+
+		for (int i = 0; i < serverplayers; i++)
+		{
+			playerDATA data;
+			packet >> data.id >> data.name >> data.speed >> data.posX >> data.posY >> data.dirX >> data.dirY >> data.size;
+
+			if (data.id != player1->getPlayerData().id)
+			{
+
+				ghostManager->updateGhostData(data);
+
+			}
+		}
+		break;
+	case NetworkType::PILL:
 		pillDATA pillData;
 		packet >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
 		std::cout << pillData.id << std::endl;
@@ -147,7 +162,8 @@ void Level::update(float dt)
 
 		break;
 	}
-	networkManager->udpSendPacket(player1->getPlayerData());
+	
+	networkManager->udpSendPacket(player1->getPlayerData(), false);
 }
 
 void networkUpdate()

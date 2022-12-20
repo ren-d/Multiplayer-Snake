@@ -2,11 +2,12 @@
 Player::Player(sf::Vector2f screenCenter)
 {
 	_screenCenter = screenCenter;
+	_bodyColor = sf::Color::Cyan;
 	_size = 3;
 	_speed = 50;
 	_scale = sf::Vector2f(1, 1);
 	_head = new Node(1, 0,10, 10, sf::Color::Blue, &_scale);
-	_end = new Node(1, 0, 7, 10, sf::Color::Cyan, &_scale);
+	_end = new Node(1, 0, 7, 10, _bodyColor, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
 	setSize(sf::Vector2f(_head->getShape().getLocalBounds().width, _head->getShape().getLocalBounds().height));
@@ -56,6 +57,7 @@ void Player::handleInput(float dt)
 	_playerData.dirY = _head->getDirection().y;
 
 	_playerData.size = _size;
+	_playerData.speed = _speed;
 	_counter += dt;
 
 	if (outOfBounds) {
@@ -192,7 +194,7 @@ void Player::addTailNode()
 	addEnd(new Node(_end->getDirection().x, _end->getDirection().y,
 					_end->getPosition().x - _end->getDirection().y, 
 					_end->getPosition().y - _end->getDirection().y, 
-					sf::Color::Cyan, 
+					_bodyColor, 
 					&_scale));
 }
 

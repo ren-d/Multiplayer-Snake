@@ -16,7 +16,7 @@ public:
 	void render(sf::RenderWindow* window);
 	void updateGhostData(playerDATA player);
 	void addGhost(playerDATA data);
-	void unpackData(DataType type);
+	void unpackData(NetworkType type);
 	NetworkManager* _networkManager;
 
 	std::vector<playerDATA*> _playerData;

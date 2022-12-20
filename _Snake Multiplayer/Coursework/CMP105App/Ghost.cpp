@@ -2,13 +2,14 @@
 Ghost::Ghost(playerDATA data)
 {
 	_size = data.size;
-	_speed = data.speed;
+	_speed = 0;
 	_scale = sf::Vector2f(1, 1);
+	_bodyColor = sf::Color::Yellow;
 	_head = new Node(data.dirX, data.dirY, data.posX, data.posY, sf::Color::Red, &_scale);
 	_end = new Node(data.dirX, data.dirY, data.posX - 3, data.posY, sf::Color::Yellow, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
-
+	
 	setSize(sf::Vector2f(_head->getShape().getLocalBounds().width, _head->getShape().getLocalBounds().height));
 	Init();
 
@@ -22,10 +23,13 @@ Ghost::~Ghost()
 }
 void Ghost::updatePlayerData(playerDATA data)
 {
+
 	_playerData.speed = data.speed;
-	_playerData.dirX = data.dirX;
-	_playerData.dirY = data.dirY;
+	_playerData.dirX = -data.dirX;
+	_playerData.dirY = -data.dirY;
 	_speed = _playerData.speed;
+
+	std::cout << _head->getPosition().x << std::endl;
 
 	int growth = data.size - _playerData.size;
 
@@ -41,11 +45,11 @@ void Ghost::updatePlayerData(playerDATA data)
 	
 	_playerData.size = _size;
 
-	std::cout << "MAMA" << _playerData.dirX << _playerData.dirY;
-	_head->setDirection(sf::Vector2f(_playerData.dirX, _playerData.dirY));
 
+	_head->setDirection(sf::Vector2f(-_playerData.dirX, -_playerData.dirY));
+	
 	setPosition(_head->getPosition());
-
+	 
 	
 
 }

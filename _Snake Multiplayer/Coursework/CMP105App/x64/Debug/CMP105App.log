@@ -1,26 +1,37 @@
-﻿  Player.cpp
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(24,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  Ghost.cpp
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(4,14): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(8,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(8,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(9,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(9,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(30,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(46,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.cpp(59,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Player.cpp
 C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(25,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(27,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(58,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(124,20): warning C4305: '-=': truncation from 'double' to 'T'
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(26,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(28,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(59,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(60,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(126,20): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(125,20): warning C4305: '-=': truncation from 'double' to 'T'
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(127,20): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(150,20): warning C4305: '+=': truncation from 'double' to 'T'
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(152,20): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(151,20): warning C4305: '+=': truncation from 'double' to 'T'
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(153,20): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
+  Generating Code...
   CMP105App.vcxproj -> C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe
