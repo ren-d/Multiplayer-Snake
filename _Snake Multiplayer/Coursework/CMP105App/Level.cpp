@@ -76,7 +76,7 @@ void Level::render()
 
 void Level::update(float dt)
 {
-	
+
 	ghostManager->update(dt);
 	int type = -1;
 
@@ -110,7 +110,11 @@ void Level::update(float dt)
 		
 		int id;
 		packet >> id;
-		player1->setId(id);
+		if (player1->getPlayerData().id <= 0)
+		{
+			player1->setId(id);
+		}
+		
 		int serverplayers;
 		packet >> serverplayers;
 		std::cout << "tage" << serverplayers << std::endl;
@@ -118,9 +122,13 @@ void Level::update(float dt)
 		{
 			playerDATA data;
 			packet >> data.id >> data.name >> data.speed >>data.posX >> data.posY >> data.dirX >> data.dirY >> data.size;
+		
 			if (data.id != player1->getPlayerData().id)
 			{
+				std::cout << "THE PLAYER ID" << player1->getPlayerData().id<< std::endl;
+				std::cout << "THE OTHER ID" << data.id << std::endl;
 				ghostManager->addGhost(data);
+				
 			}
 			
 
@@ -139,7 +147,7 @@ void Level::update(float dt)
 
 		break;
 	}
-
+	networkManager->udpSendPacket(player1->getPlayerData());
 }
 
 void networkUpdate()

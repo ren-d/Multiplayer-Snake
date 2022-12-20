@@ -52,8 +52,9 @@ void Player::handleInput(float dt)
 
 	_playerData.posX = int(_head->getPosition().x);
 	_playerData.posY = int(_head->getPosition().y);
+	_playerData.dirX = _head->getDirection().x;
+	_playerData.dirY = _head->getDirection().y;
 
-	_playerData.id = 0;
 	_playerData.size = _size;
 	_counter += dt;
 
@@ -93,10 +94,14 @@ void Player::handleInput(float dt)
 		
 	}
 
-	_mouseDirectionVector = sf::Vector2f( input->getMouseX() - _screenCenter.x,  input->getMouseY() - _screenCenter.y );
-	float angle = atan2(_mouseDirectionVector.x, _mouseDirectionVector.y);
+	if (!isstop)
+	{
+		_mouseDirectionVector = sf::Vector2f(input->getMouseX() - _screenCenter.x, input->getMouseY() - _screenCenter.y);
+		float angle = atan2(_mouseDirectionVector.x, _mouseDirectionVector.y);
+
+		_head->setDirection(sf::Vector2f(3 * sin(angle), 3 * cos(angle)));
+	}
 	
-	_head->setDirection(sf::Vector2f (3 * sin(angle) , 3 * cos(angle)));
 	
 	
 		

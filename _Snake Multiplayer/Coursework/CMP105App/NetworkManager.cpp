@@ -31,7 +31,7 @@ sf::Packet NetworkManager::udpSendPacket(playerDATA data)
 {
 	sf::Packet packet;
 
-	packet << static_cast<int>(DataType::PLAYER) << data.name << data.speed << data.posX << data.posY << data.dirX << data.dirY;
+	packet << static_cast<int>(DataType::PLAYER) << data.id << data.name << data.speed << data.posX << data.posY << data.dirX << data.dirY << data.size;
 
 	sf::IpAddress sendIp("127.0.0.1");
 	_uSocket.send(packet, sendIp, 54000);

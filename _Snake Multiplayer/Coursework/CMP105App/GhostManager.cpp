@@ -22,6 +22,7 @@ void GhostManager::update(float dt)
 		{
 			if (ghost->getPlayerData().id == data->id)
 			{
+		
 				ghost->updatePlayerData(*data);
 			}
 		}
@@ -59,12 +60,11 @@ void GhostManager::render(sf::RenderWindow* window)
 void GhostManager::addGhost(playerDATA data)
 {
 	std::cout << "id: " << data.id << std::endl;
-	std::cout << "name: " << data.name << std::endl;
-	std::cout << "posX: " << data.posX << std::endl;
-	std::cout << "posY: " << data.posY << std::endl;
-	std::cout << "dirX: " << data.dirX << std::endl;
-	std::cout << "dirY: " << data.dirY << std::endl;
-	std::cout << "speed: " << data.speed << std::endl;
 
-	_ghosts.push_back(new Ghost(data));
+	if (data.id > _ghosts.size())
+	{
+		_ghosts.push_back(new Ghost(data));
+		_playerData.push_back(&data);
+	}
+	
 }

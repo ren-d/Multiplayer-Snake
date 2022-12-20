@@ -5,7 +5,7 @@ Ghost::Ghost(playerDATA data)
 	_speed = data.speed;
 	_scale = sf::Vector2f(1, 1);
 	_head = new Node(data.dirX, data.dirY, data.posX, data.posY, sf::Color::Red, &_scale);
-	_end = new Node(1, 0, 7, 10, sf::Color::Yellow, &_scale);
+	_end = new Node(data.dirX, data.dirY, data.posX - 3, data.posY, sf::Color::Yellow, &_scale);
 	_head->prev = _end;
 	_end->next = _head;
 
@@ -41,6 +41,7 @@ void Ghost::updatePlayerData(playerDATA data)
 	
 	_playerData.size = _size;
 
+	std::cout << "MAMA" << _playerData.dirX << _playerData.dirY;
 	_head->setDirection(sf::Vector2f(_playerData.dirX, _playerData.dirY));
 
 	setPosition(_head->getPosition());
@@ -51,5 +52,5 @@ void Ghost::updatePlayerData(playerDATA data)
 
 void Ghost::handleInput(float dt)
 {
-
+	_speed = _playerData.speed;
 }

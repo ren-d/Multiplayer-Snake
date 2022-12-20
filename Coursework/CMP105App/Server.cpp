@@ -131,14 +131,15 @@ void udpConnection()
 
 void processRecievedPacket(sf::Packet packet)
 {
-	std::cout << port << std::endl;
+
 	int dataType;
 	packet >> dataType;
 	switch (static_cast<DataType>(dataType)) {
 	case DataType::PLAYER:
 		if (!std::count(ports.begin(), ports.end(), port))
 		{
-
+			int temp;
+			packet >> temp;
 			ports.push_back(port);
 			playerDATA* newPlayer = new playerDATA();
 			packet >> newPlayer->name >> newPlayer->speed >> newPlayer->posX >> newPlayer->posY >> newPlayer->dirX >> newPlayer->dirY >> newPlayer->size;
@@ -165,7 +166,27 @@ void processRecievedPacket(sf::Packet packet)
 		}
 		else
 		{
+			int pid;
+			packet >> pid;
+			
+			for (playerDATA* player : players)
+			{
+				if (player->id == pid)
+				{
+					
+					packet >> player->name >> player->speed >> player->posX >> player->posY >> player->dirX >> player->dirY >> player->size;
 
+				}
+			}
+			packet.clear();
+			packet << static_cast<int>(DataType::PLAYER) << 0 << playerno;
+			for (playerDATA* player : players)
+			{
+				packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
+			}
+
+
+			packet.clear();
 		}
 
 		break;
