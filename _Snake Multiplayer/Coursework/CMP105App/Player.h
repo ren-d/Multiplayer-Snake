@@ -38,7 +38,7 @@ public:
     playerDATA getPlayerData();
 
     bool outOfBounds = false;
-
+    
 protected:
     void addFront(Node* node);
     void addEnd(Node* node);
@@ -51,6 +51,7 @@ protected:
     playerDATA _playerData;
     Node* _head, *_end;
     bool isstop = false;
+    
     
    
 

@@ -15,20 +15,25 @@ Ghost::Ghost(playerDATA data)
 
 
 	_playerData = data;
+
+	directionVectors[0] = sf::Vector2f(0,0);
+	directionVectors[1] = sf::Vector2f(0, 0);
+	directionVectors[2] = sf::Vector2f(0, 0);
 }
 
 Ghost::~Ghost()
 {
 
 }
-void Ghost::updatePlayerData(playerDATA data)
+void Ghost::updatePlayerData(playerDATA data, float ping)
 {
 
 	_playerData.speed = data.speed;
-	_playerData.dirX = -data.dirX;
-	_playerData.dirY = -data.dirY;
-	_speed = _playerData.speed;
 
+	_speed = _playerData.speed;
+	directionVectors[0] = directionVectors[1];
+	directionVectors[1] = directionVectors[2];
+	directionVectors[2] = sf::Vector2f(-data.dirX, -data.dirY);
 
 	int growth = data.size - _playerData.size;
 
@@ -45,8 +50,12 @@ void Ghost::updatePlayerData(playerDATA data)
 	_playerData.size = _size;
 
 
+	float dirXAverage = (directionVectors[0].x + directionVectors[1].x + directionVectors[2].x) / 3.0f;
+	float dirYAverage = (directionVectors[0].y + directionVectors[1].y + directionVectors[2].y) / 3.0f;
+	_playerData.dirX = dirXAverage;
+	_playerData.dirY = dirYAverage;
 	_head->setDirection(sf::Vector2f(-_playerData.dirX, -_playerData.dirY));
-	
+
 	setPosition(_head->getPosition());
 	 
 	

@@ -95,7 +95,7 @@ void Level::update(float dt)
 		
 		count += dt;
 
-		ghostManager->update(dt);
+		ghostManager->update(dt, ping);
 		
 
 
@@ -110,7 +110,7 @@ void Level::update(float dt)
 		{
 			if (Collision::checkBoundingCircle(pills[i], player1))
 			{
-				std::cout << "what" << std::endl;
+
 				player1->Grow(pills[i]->_growthValue);
 				networkManager->udpSendPacket(pills[i]->_data.id);
 
@@ -120,13 +120,19 @@ void Level::update(float dt)
 			}
 		}
 	}
-	
+
 	int type = -1;
+	int id = 0;
 	sf::Packet packet = networkManager->udpRecievePacket();
 	packet >> type;
 	int serverplayers;
 	switch (static_cast<NetworkType>(type))
 	{
+	case NetworkType::WORLD:
+		
+		packet >> id;
+		ghostManager->removeGhost(id);
+		break;
 	case NetworkType::PONG:
 		ponged = true;
 		
@@ -154,7 +160,7 @@ void Level::update(float dt)
 
 				size++;
 				pongValues += pong;
-				std::cout << pongValues << std::endl;
+
 
 
 			}
@@ -169,7 +175,7 @@ void Level::update(float dt)
 		{
 			networkManager->sendPing();
 		}
-		ping = 0;
+		
 		
 		break;
 	case NetworkType::PLAYER_INIT:
@@ -216,10 +222,7 @@ void Level::update(float dt)
 	case NetworkType::PILL:
 		pillDATA pillData;
 		packet >> pillData.id >> pillData.x >> pillData.y >> pillData.growthValue;
-		std::cout << pillData.id << std::endl;
-		std::cout << pillData.x << std::endl;
-		std::cout << pillData.y << std::endl;
-		std::cout << pillData.growthValue << std::endl;
+
 
 		delete pills[pillData.id];
 		pills[pillData.id] = new Pill(pillData);
@@ -227,7 +230,7 @@ void Level::update(float dt)
 		break;
 	}
 
-	if (count >= 0.05f)
+	if (count >= 0.01f)
 	{
 		if (player1->getPlayerData().speed > 0)
 		{

@@ -1,27 +1,4 @@
-﻿  Player.cpp
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(25,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(26,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(28,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(59,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(60,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(130,20): warning C4305: '-=': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(131,20): warning C4305: '-=': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(156,20): warning C4305: '+=': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Player.cpp(157,20): warning C4305: '+=': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
+﻿  Main.cpp
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Ghost.h(19,30): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\CMP105App\Main.cpp(73,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   CMP105App.vcxproj -> C:\Users\Duncan\Desktop\New folder\Multiplayer-Snake\_Snake Multiplayer\Coursework\x64\Debug\CMP105App.exe

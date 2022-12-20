@@ -36,6 +36,7 @@ public:
 
 	sf::Packet udpSendPacket(int id);
 	sf::Packet udpSendPacket(playerDATA data, bool isInit);
+	sf::Packet udpSendPacket(bool death, int id);
 	sf::Packet udpRecievePacket();
 	void tcpSendPacket(int id);
 	sf::Packet tcpRecievePacket();

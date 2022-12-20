@@ -43,6 +43,7 @@ float deltaTime;
 float server_time;
 
 int playerno = 0;
+//main server
 int main()
 {
 	std::vector<sf::TcpSocket*> clients;
@@ -69,9 +70,10 @@ int main()
 	sf::Thread* thread = new sf::Thread(udpConnection);
 	thread->launch();
 	
+
 	while (true)
 	{
-		
+		//wait for new connection
 		if (selector.wait())
 		{
 			if (selector.isReady(listener))
@@ -85,9 +87,10 @@ int main()
 				}
 				else
 				{
+					//add client to stack
 					clients.push_back(newClient);
 					selector.add(*newClient);
-					std::cout << "WINNER" << std::endl;
+					std::cout << "NEW CLIENT CONNECTED" << std::endl;
 					if (isLoaded != true)
 					{
 						playerno++;
@@ -111,6 +114,7 @@ int main()
 	return 0;
 }
 
+//udp thread
 void udpConnection()
 {
 	sf::Clock clock;
@@ -134,12 +138,15 @@ void udpConnection()
 	}
 }
 
-
+//check for incoming udp packets
 void processRecievedPacket(sf::Packet packet)
 {
 	playerDATA* newPlayer;
 	int dataType;
+	int id = 0;
 	packet >> dataType;
+
+	//network type state machine
 	switch (static_cast<NetworkType>(dataType)) {
 	case NetworkType::PING:
 		packet.clear();
@@ -147,6 +154,38 @@ void processRecievedPacket(sf::Packet packet)
 		socket.send(packet, sender, port);
 		packet.clear();
 		break;
+	case NetworkType::WORLD:
+		
+		packet << id;
+
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players[i]->id == id)
+			{
+				for (int j = 0; i < ports.size(); i++)
+				{
+					
+					if (players[i]->port == port)
+					{
+						ports.erase(ports.begin() + j);
+						std::cout << players[i]->name << " disconnected" << std::endl;
+						
+					}
+				}
+			}
+		}
+		packet.clear();
+
+		packet << static_cast<int>(NetworkType::WORLD) << id;
+
+		for (int i = 0; i < ports.size(); i++)
+		{
+			socket.send(packet, sender, ports[i]);
+		}
+		packet.clear();
+
+		break;
+
 	case NetworkType::PLAYER_INIT:
 		if (std::count(ports.begin(), ports.end(), port))
 		{
@@ -224,7 +263,7 @@ void processRecievedPacket(sf::Packet packet)
 		packet.clear();
 
 		packet << static_cast<int>(NetworkType::PILL) << pills[id].id << pills[id].posX << pills[id].posY << pills[id].growthValue;
-
+		std::cout << "Pill Removed: " << std::endl;
 		std::cout << pills[id].id << std::endl;
 		std::cout << pills[id].posX << std::endl;
 		std::cout << pills[id].posY << std::endl;
@@ -242,6 +281,7 @@ void processRecievedPacket(sf::Packet packet)
 	}
 }
 
+//generate world
 pillDATA generatePill(pillDATA newPill, int id)
 {
 	newPill.id = id;

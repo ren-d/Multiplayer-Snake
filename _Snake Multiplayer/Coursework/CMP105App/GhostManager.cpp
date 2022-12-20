@@ -14,7 +14,7 @@ void GhostManager::setNetworkManager(NetworkManager* networkManager)
 	_networkManager = networkManager;
 }
 
-void GhostManager::update(float dt)
+void GhostManager::update(float dt, float ping)
 {
 
 	for (Ghost* ghost : _ghosts)
@@ -26,7 +26,7 @@ void GhostManager::update(float dt)
 			if (ghost->getPlayerData().id == data->id)
 			{
 
-				ghost->updatePlayerData(*data);
+				ghost->updatePlayerData(*data, ping);
 			}
 		}
 
@@ -48,6 +48,18 @@ void GhostManager::updateGhostData(playerDATA player)
 			data->size = player.size;
 
 			
+		}
+	}
+}
+
+void GhostManager::removeGhost(int id)
+{
+	for(int i =0; i < _ghosts.size(); i++)
+	{
+		if (id == _ghosts[i]->getPlayerData().id)
+		{
+			_ghosts.erase(_ghosts.begin() + i);
+			break;
 		}
 	}
 }

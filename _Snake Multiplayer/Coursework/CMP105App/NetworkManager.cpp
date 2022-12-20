@@ -80,6 +80,20 @@ void NetworkManager::tcpHandshake()
 	
 }
 
+
+sf::Packet  NetworkManager::udpSendPacket(bool death, int id)
+{
+
+	sf::Packet packet;
+
+	packet << static_cast<int>(NetworkType::WORLD) << id;
+
+	sf::IpAddress sendIp("127.0.0.1");
+
+	_uSocket.send(packet, sendIp, 54000);
+	return packet;
+}
+
 sf::Packet NetworkManager::tcpRecievePacket()
 {
 	int type;
@@ -95,10 +109,10 @@ sf::Packet NetworkManager::tcpRecievePacket()
 		{
 		case 1:
 			test++;
-			std::cout << test << std::endl;
+
 			break;
 		default:
-			std::cout << "nope" << std::endl;
+			break;
 		}
 		
 	}

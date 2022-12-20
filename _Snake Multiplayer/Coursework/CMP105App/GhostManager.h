@@ -12,10 +12,11 @@ public:
 
 
 	void init();
-	void update(float dt);
+	void update(float dt, float ping);
 	void render(sf::RenderWindow* window);
 	void updateGhostData(playerDATA player);
 	void addGhost(playerDATA data);
+	void removeGhost(int id);
 	void unpackData(NetworkType type);
 	NetworkManager* _networkManager;
 

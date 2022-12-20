@@ -65,9 +65,11 @@ void windowProcess(sf::RenderWindow* window, Input* in)
 
 int main()
 {
-	std::cout << "input server ip" << std::endl;
-	std::string serverip;
-	std::cin >> serverip;
+
+	std::string start;
+
+	std::cout << "press any key and enter to start client" << std::endl;
+	std::cin >> start;
 	srand(time(NULL));
 	//Create the window
 	sf::RenderWindow window(sf::VideoMode(640, 480), "CMP105_Coursework");
