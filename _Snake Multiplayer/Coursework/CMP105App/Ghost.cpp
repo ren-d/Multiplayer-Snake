@@ -29,7 +29,6 @@ void Ghost::updatePlayerData(playerDATA data)
 	_playerData.dirY = -data.dirY;
 	_speed = _playerData.speed;
 
-	std::cout << _head->getPosition().x << std::endl;
 
 	int growth = data.size - _playerData.size;
 

@@ -21,9 +21,15 @@ public:
     sf::CircleShape shape;
     Player* player1;
     sf::RectangleShape wall;
-
+    sf::Clock clock;
+    bool ponged = false;
+    bool sentPlayerData = false;
     GhostManager* ghostManager;
-
+    int cooldown = 0;
+    float count, ping;
+    std::vector<float> pongs;
+    float server_time;
+    float global_server_time = 0;
     sf::IpAddress rIp;
     char buffer[100];
     const int MAX_PILLS = 300;

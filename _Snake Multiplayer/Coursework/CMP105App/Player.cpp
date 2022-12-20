@@ -4,7 +4,7 @@ Player::Player(sf::Vector2f screenCenter)
 	_screenCenter = screenCenter;
 	_bodyColor = sf::Color::Cyan;
 	_size = 3;
-	_speed = 50;
+	_speed = 0;
 	_scale = sf::Vector2f(1, 1);
 	_head = new Node(1, 0,10, 10, sf::Color::Blue, &_scale);
 	_end = new Node(1, 0, 7, 10, _bodyColor, &_scale);
@@ -83,21 +83,25 @@ void Player::handleInput(float dt)
 	}
 	else
 	{
+		
 		if (input->isPressed(sf::Keyboard::Space) && isstop == false)
 		{
-			isstop = true;
+			
 			_speed = 0;
+			isstop = true;
 		}
 		else if (input->isPressed(sf::Keyboard::Space) && isstop == true)
 		{
-			isstop = false;
 			_speed = 50;
+			isstop = false;
+			
 		}
 		
 	}
 
 	if (!isstop)
 	{
+		_speed = 50;
 		_mouseDirectionVector = sf::Vector2f(input->getMouseX() - _screenCenter.x, input->getMouseY() - _screenCenter.y);
 		float angle = atan2(_mouseDirectionVector.x, _mouseDirectionVector.y);
 

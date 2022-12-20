@@ -19,7 +19,7 @@ void GhostManager::update(float dt)
 
 	for (Ghost* ghost : _ghosts)
 	{
-		std::cout <<"GHOAST: " <<ghost->getPlayerData().id << std::endl;
+
 		for (playerDATA* data : _playerData)
 		{
 
@@ -62,12 +62,25 @@ void GhostManager::render(sf::RenderWindow* window)
 
 void GhostManager::addGhost(playerDATA data)
 {
-	std::cout << "id: " << data.id << std::endl;
+	bool duplicate = false;
 
-	if (data.id > _ghosts.size())
+	for (Ghost* ghost : _ghosts)
 	{
-		_ghosts.push_back(new Ghost(data));
-		_playerData.push_back(new playerDATA(data));
+		if (data.id == ghost->getPlayerData().id)
+		{
+			duplicate = true;
+			break;
+		}
 	}
+
+	if (duplicate == false)
+	{
+		if (data.id > _ghosts.size())
+		{
+			_ghosts.push_back(new Ghost(data));
+			_playerData.push_back(new playerDATA(data));
+		}
+	}
+	
 	
 }

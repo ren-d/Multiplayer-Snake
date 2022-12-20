@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Player.h"
 enum class NetworkType {
-	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5
+	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5, PING = 6, PONG = 7
 };
 
 enum class PacketType {
@@ -39,6 +39,8 @@ public:
 	sf::Packet udpRecievePacket();
 	void tcpSendPacket(int id);
 	sf::Packet tcpRecievePacket();
+
+	void sendPing();
 
 	void tcpHandshake();
 

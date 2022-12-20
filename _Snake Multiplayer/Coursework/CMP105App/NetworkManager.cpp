@@ -27,6 +27,20 @@ sf::Packet NetworkManager::udpSendPacket(int id)
 	return _sendPacket;
 }
 
+void NetworkManager::sendPing()
+{
+	sf::Packet packet;
+
+	packet << static_cast<int>(NetworkType::PING);
+
+	sf::IpAddress sendIp("127.0.0.1");
+
+	_uSocket.send(packet, sendIp, 54000);
+
+		
+
+	
+}
 sf::Packet NetworkManager::udpSendPacket(playerDATA data, bool isInit)
 {
 	sf::Packet packet;

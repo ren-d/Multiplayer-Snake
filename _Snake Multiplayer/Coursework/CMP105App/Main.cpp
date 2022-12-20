@@ -81,7 +81,7 @@ int main()
 	// Initialise objects for delta time
 	sf::Clock clock;
 	float deltaTime;
-
+	float count = 0;
 	// Game Loop
 	while (window.isOpen())
 	{
@@ -93,14 +93,23 @@ int main()
 		// since it was last calculated (in seconds) and restart the clock.
 		deltaTime = clock.restart().asSeconds();
 		
-		// Call standard game loop functions (input, update and render)
-		level.handleInput(deltaTime);
-		level.update(deltaTime);
-		level.render();
+		count += deltaTime;
 
-		// Update input class, handle pressed keys
-		// Must be done last.
-		input.update();
+		if(count > 1.0/60)
+		{
+			// Call standard game loop functions (input, update and render)
+			level.handleInput(count);
+			level.update(count);
+			count = 0.0;
+		}
+			level.render();
+
+			// Update input class, handle pressed keys
+			// Must be done last.
+			input.update();
+
+
+		
 	}
 
 }

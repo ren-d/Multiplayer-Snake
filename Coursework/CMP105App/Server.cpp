@@ -3,7 +3,7 @@
 #include <random>
 #include <thread>
 enum class NetworkType {
-	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5
+	PLAYER = 0, PILL = 1, TEXT = 2, EVENT = 3, WORLD = 4, PLAYER_INIT = 5, PING = 6, PONG = 7
 };
 struct playerDATA
 {
@@ -39,6 +39,8 @@ sf::IpAddress sender;
 unsigned short port;
 std::vector<playerDATA*> players;
 std::vector<unsigned short> ports;
+float deltaTime;
+float server_time;
 
 int playerno = 0;
 int main()
@@ -69,6 +71,7 @@ int main()
 	
 	while (true)
 	{
+		
 		if (selector.wait())
 		{
 			if (selector.isReady(listener))
@@ -110,6 +113,7 @@ int main()
 
 void udpConnection()
 {
+	sf::Clock clock;
 	sf::Packet udpPacket;
 	socket.bind(54000);
 
@@ -117,6 +121,8 @@ void udpConnection()
 
 	while (true)
 	{
+		deltaTime = clock.restart().asSeconds();
+		server_time += deltaTime;
 		if (socket.receive(udpPacket, sender, port) != sf::Socket::Done)
 		{
 
@@ -135,6 +141,12 @@ void processRecievedPacket(sf::Packet packet)
 	int dataType;
 	packet >> dataType;
 	switch (static_cast<NetworkType>(dataType)) {
+	case NetworkType::PING:
+		packet.clear();
+		packet << static_cast<int>(NetworkType::PONG) << server_time;
+		socket.send(packet, sender, port);
+		packet.clear();
+		break;
 	case NetworkType::PLAYER_INIT:
 		if (std::count(ports.begin(), ports.end(), port))
 		{
@@ -185,19 +197,24 @@ void processRecievedPacket(sf::Packet packet)
 		}
 		packet.clear();
 		packet << static_cast<int>(NetworkType::PLAYER) << playerno;
+
 		for (playerDATA* player : players)
 		{
+			
 			packet << player->id << player->name << player->speed << player->posX << player->posY << player->dirX << player->dirY << player->size;
+			
+			
 		}
-
+		
 		for (int i = 0; i < ports.size(); i++)
 		{
 			if (ports[i] != port)
 			{
 				socket.send(packet, sender, ports[i]);
 			}
-			
+
 		}
+		
 		packet.clear();
 		break;
 	case NetworkType::PILL:
