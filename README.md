@@ -1,4 +1,6 @@
 # Multiplayer-Snake
 main source is contained in Cmp105App
 
-!!!Currently Cleaning up the code Repo!!!
+Network testing and showcase
+
+https://www.youtube.com/watch?v=0QMiiKXaips
